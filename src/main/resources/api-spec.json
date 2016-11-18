@@ -1,0 +1,150 @@
+{
+    "attributes": {
+        "coreAttributes": [
+            "class",
+            "id",
+            "title"
+        ],
+        "eventHandlerAttributes": [
+            "onblur",
+            "onclick"
+        ],
+        "xmlAttributes": []
+    },
+    "elements": {
+        "flowElements": [
+            {
+                "name": "html",
+                "childIncludes": [
+                    "head",
+                    "body"
+                ],
+                "parentIncludes": []
+            },
+            {
+                "name": "head",
+                "childIncludes": [
+                    "title",
+                    "link",
+                    "style",
+                    "meta",
+                    "script",
+                    "noscript",
+                    "command"
+                ],
+                "parentIncludes": [
+                    "html"
+                ]
+            },
+            {
+                "name": "title",
+                "parentIncludes": [
+                    "head"
+                ],
+                "childIncludes": []
+            },
+            {
+                "name": "body",
+                "parentIncludes": [
+                    "html"
+                ]
+            },
+            {
+                "name": "div"
+            },
+            {
+                "name": "h1"
+            },
+            {
+                "name": "table",
+                "transparent": true,
+                "childIncludes": [
+                    "thead",
+                    "tbody",
+                    "tr"
+                ]
+            },
+            {
+                "name": "thead",
+                "parentIncludes": [
+                    "table"
+                ]
+            },
+            {
+                "name": "tbody",
+                "childIncludes": [
+                    "tr"
+                ],
+                "parentIncludes": [
+                    "table"
+                ]
+            },
+            {
+                "name": "tr",
+                "childIncludes": [
+                    "td",
+                    "th"
+                ],
+                "parentIncludes": [
+                    "table",
+                    "tbody",
+                    "thead"
+                ]
+            },
+            {
+                "name": "td",
+                "parentIncludes": [
+                    "tr"
+                ]
+            },
+            {
+                "name": "th",
+                "parentIncludes": [
+                    "tr"
+                ]
+            }
+        ],
+        "metadataElements": [
+            {
+                "name": "meta",
+                "childIncludes": []
+            },
+            {
+                "name": "link",
+                "childIncludes": []
+            },
+            {
+                "name": "style",
+                "childIncludes": []
+            },
+            {
+                "name": "script",
+                "childIncludes": []
+            },
+            {
+                "name": "noscript",
+                "childIncludes": []
+            },
+            {
+                "name": "command",
+                "childIncludes": []
+            }
+        ],
+        "phrasingElements": [
+            {
+                "name": "a"
+            },
+            {
+                "name": "p"
+            },
+            {
+                "name": "base",
+                "childIncludes": []
+            },
+            {
+                "name": "br",
+                "childIncludes": []
+            }
+        ]
+    }
+}

@@ -4,8 +4,8 @@ import de.scyv.htmlgen.TextContentElement;
 /**
  * This class is generated. Do not change manually!
  */
-public class P extends AbstractElement {
-    public P() { super("p"); }
+public class Th extends AbstractElement {
+    public Th() { super("th"); }
     public Div div() {
         return appendChild(new Div());
     }
@@ -34,7 +34,22 @@ public class P extends AbstractElement {
         return appendChild(new Base());
     }
 
-    public P text(String text) {
+    public Th attrClass(String value) {
+        appendAttribute("class", value);
+        return this;
+    }
+
+    public Th attrId(String value) {
+        appendAttribute("id", value);
+        return this;
+    }
+
+    public Th attrTitle(String value) {
+        appendAttribute("title", value);
+        return this;
+    }
+
+    public Th text(String text) {
         appendChild(new TextContentElement(text));
         return this;
     }

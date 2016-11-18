@@ -4,8 +4,8 @@ import de.scyv.htmlgen.TextContentElement;
 /**
  * This class is generated. Do not change manually!
  */
-public class Thead extends AbstractElement {
-    public Thead() { super("thead"); }
+public class P extends AbstractElement {
+    public P() { super("p"); }
     public Div div() {
         return appendChild(new Div());
     }
@@ -16,10 +16,6 @@ public class Thead extends AbstractElement {
 
     public Table table() {
         return appendChild(new Table());
-    }
-
-    public Tr tr() {
-        return appendChild(new Tr());
     }
 
     public P p() {
@@ -38,7 +34,22 @@ public class Thead extends AbstractElement {
         return appendChild(new Base());
     }
 
-    public Thead text(String text) {
+    public P attrClass(String value) {
+        appendAttribute("class", value);
+        return this;
+    }
+
+    public P attrId(String value) {
+        appendAttribute("id", value);
+        return this;
+    }
+
+    public P attrTitle(String value) {
+        appendAttribute("title", value);
+        return this;
+    }
+
+    public P text(String text) {
         appendChild(new TextContentElement(text));
         return this;
     }

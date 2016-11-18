@@ -34,6 +34,21 @@ public class A extends AbstractElement {
         return appendChild(new Base());
     }
 
+    public A attrClass(String value) {
+        appendAttribute("class", value);
+        return this;
+    }
+
+    public A attrId(String value) {
+        appendAttribute("id", value);
+        return this;
+    }
+
+    public A attrTitle(String value) {
+        appendAttribute("title", value);
+        return this;
+    }
+
     public A text(String text) {
         appendChild(new TextContentElement(text));
         return this;

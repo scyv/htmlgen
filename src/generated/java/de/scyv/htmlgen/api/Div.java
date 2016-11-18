@@ -34,6 +34,21 @@ public class Div extends AbstractElement {
         return appendChild(new Base());
     }
 
+    public Div attrClass(String value) {
+        appendAttribute("class", value);
+        return this;
+    }
+
+    public Div attrId(String value) {
+        appendAttribute("id", value);
+        return this;
+    }
+
+    public Div attrTitle(String value) {
+        appendAttribute("title", value);
+        return this;
+    }
+
     public Div text(String text) {
         appendChild(new TextContentElement(text));
         return this;

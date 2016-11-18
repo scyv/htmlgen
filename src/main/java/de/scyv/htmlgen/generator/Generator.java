@@ -1,4 +1,4 @@
-package de.scyv.htmlgen;
+package de.scyv.htmlgen.generator;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,14 +23,13 @@ public class Generator {
 
     public static void main(String[] args) throws Exception {
         new Generator().generate();
-
     }
 
     private void generate() throws Exception {
         String apiSpecRaw = new String(
                 Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("api-spec.json").toURI())));
 
-        String targetPath = "src/main/java/de/scyv/htmlgen/api/";
+        String targetPath = "src/generated/java/de/scyv/htmlgen/api/";
 
         JSONObject apiSpec = new JSONObject(apiSpecRaw);
 
@@ -55,19 +54,12 @@ public class Generator {
 
         new File(targetPath).mkdirs();
 
-        Consumer<? super Object> writeClassFile = obj -> {
+        Consumer<? super Object> generateFileContent = obj -> {
             JSONObject element = (JSONObject) obj;
             String elementName = String.valueOf(element.get("name"));
             String fileName = upperFirst(elementName);
             StringBuilder fileContent = new StringBuilder("");
-            fileContent.append("package de.scyv.htmlgen.api;\n");
-            fileContent.append("import de.scyv.htmlgen.AbstractElement;\n");
-            fileContent.append("import de.scyv.htmlgen.TextContentElement;\n");
-            fileContent.append("/**\n");
-            fileContent.append(" * This class is generated. Do not change manually!\n");
-            fileContent.append(" */\n");
-            fileContent.append("public class " + fileName + " extends AbstractElement {\n");
-            fileContent.append(tab() + "public " + fileName + "() { super(\"" + elementName + "\"); }\n");
+            createClassHead(elementName, fileName, fileContent);
 
             if (element.has("childIncludes")) {
                 fileContent.append(getAddElementMethods(getAllElementNames(element, "childIncludes").stream()));
@@ -86,6 +78,8 @@ public class Generator {
                 };
                 fileContent.append(getAddElementMethods(flowElementNames.stream().filter(predicate)));
                 fileContent.append(getAddElementMethods(phrasingElementNames.stream().filter(predicate)));
+                
+                writeAttributeMethods(element, attributes, fileContent);
             }
             
             if(!element.has("notext")) {
@@ -95,41 +89,43 @@ public class Generator {
                 fileContent.append(tab() + "}\n\n");
             }
 
-            fileContent.append("}\n");
-            try {
-                String targetFile = targetPath + fileName + ".java";
-                System.out.println("Creating class file: " + targetFile);
-                Files.write(Paths.get(targetFile), fileContent.toString().getBytes(Charset.forName("UTF-8")));
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
+            writeClassFile(targetPath, fileName, fileContent);
 
         };
-        flowElements.forEach(writeClassFile);
-        phrasingElements.forEach(writeClassFile);
+        flowElements.forEach(generateFileContent);
+        phrasingElements.forEach(generateFileContent);
 
         metadataElements.forEach(obj -> {
             JSONObject element = (JSONObject) obj;
             String elementName = String.valueOf(element.get("name"));
             String fileName = upperFirst(elementName);
             StringBuilder fileContent = new StringBuilder("");
-            fileContent.append("package de.scyv.htmlgen.api;\n");
-            fileContent.append("import de.scyv.htmlgen.AbstractElement;\n");
-            fileContent.append("/**\n");
-            fileContent.append(" * This class is generated. Do not change manually!\n");
-            fileContent.append(" */\n");
-            fileContent.append("public class " + fileName + " extends AbstractElement {\n");
-            fileContent.append(tab() + "public " + fileName + "() { super(\"" + elementName + "\"); }\n");
-            fileContent.append("}\n");
-            try {
-                String targetFile = targetPath + fileName + ".java";
-                System.out.println("Creating class file: " + targetFile);
-                Files.write(Paths.get(targetFile), fileContent.toString().getBytes(Charset.forName("UTF-8")));
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
+            createClassHead(elementName, fileName, fileContent);
+            writeClassFile(targetPath, fileName, fileContent);
 
         });
+    }
+
+    private void writeClassFile(String targetPath, String fileName, StringBuilder fileContent) {
+        fileContent.append("}\n");
+        try {
+            String targetFile = targetPath + fileName + ".java";
+            System.out.println("Creating class file: " + targetFile);
+            Files.write(Paths.get(targetFile), fileContent.toString().getBytes(Charset.forName("UTF-8")));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    private void createClassHead(String elementName, String fileName, StringBuilder fileContent) {
+        fileContent.append("package de.scyv.htmlgen.api;\n");
+        fileContent.append("import de.scyv.htmlgen.AbstractElement;\n");
+        fileContent.append("import de.scyv.htmlgen.TextContentElement;\n");
+        fileContent.append("/**\n");
+        fileContent.append(" * This class is generated. Do not change manually!\n");
+        fileContent.append(" */\n");
+        fileContent.append("public class " + fileName + " extends AbstractElement {\n");
+        fileContent.append(tab() + "public " + fileName + "() { super(\"" + elementName + "\"); }\n");
     }
 
     private Set<String> getAllElementNames(JSONObject element, String arrayName) {
@@ -147,6 +143,17 @@ public class Generator {
         return result;
     }
 
+    private void writeAttributeMethods(JSONObject element, JSONObject attributes, StringBuilder fileContent) {
+        attributes.getJSONArray("coreAttributes").forEach(obj -> {
+            String attrName = String.valueOf(obj);
+            String clazzName = upperFirst(String.valueOf(element.get("name")));
+            fileContent.append(tab() + "public "+clazzName+" attr" + upperFirst(attrName) + "(String value) {\n");
+            fileContent.append(tab() + tab() + "appendAttribute(\""+attrName+"\", value);\n");
+            fileContent.append(tab() + tab() + "return this;\n");
+            fileContent.append(tab() + "}\n\n");            
+        });
+    }
+    
     private Set<String> getAllElementNames(JSONArray elements) {
         Set<String> result = new HashSet<>();
         elements.forEach(obj -> {

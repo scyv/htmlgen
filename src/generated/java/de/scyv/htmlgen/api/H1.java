@@ -34,6 +34,21 @@ public class H1 extends AbstractElement {
         return appendChild(new Base());
     }
 
+    public H1 attrClass(String value) {
+        appendAttribute("class", value);
+        return this;
+    }
+
+    public H1 attrId(String value) {
+        appendAttribute("id", value);
+        return this;
+    }
+
+    public H1 attrTitle(String value) {
+        appendAttribute("title", value);
+        return this;
+    }
+
     public H1 text(String text) {
         appendChild(new TextContentElement(text));
         return this;

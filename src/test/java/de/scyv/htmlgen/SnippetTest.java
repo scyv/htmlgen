@@ -43,6 +43,7 @@ public class SnippetTest {
         body.br();
         
         Div div1 = body.div();
+        div1.attrClass("lorem ipsum dolor");
         Div div2 = div1.div();
         div2.text("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore");
         div2.div();

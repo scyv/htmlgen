@@ -14,11 +14,23 @@ public abstract class AbstractElement {
     private String name;
     private Set<AbstractElement> children;
     private Map<String, String> attributes;
-    
+
+    /**
+     * Create the element with the given name.
+     *
+     * @param name the name of the attribute
+     */
     protected AbstractElement(String name) {
         this.name = name;
     }
-    
+
+    /**
+     * Append a child to the element.
+     *
+     * @param <T> the type of the child element
+     * @param child the child element
+     * @return  the child element
+     */
     protected <T extends AbstractElement> T appendChild(T child) {
         if (children == null) {
             children = new LinkedHashSet<>();
@@ -26,14 +38,23 @@ public abstract class AbstractElement {
         children.add(child);
         return child;
     }
-    
-    protected void appendAttribute(String key, String value) {
+
+    /**
+     * Sets the attribute value.
+     * @param key the name of the attribute to set
+     * @param value the value of the attribute
+     */
+    protected void setAttribute(String key, String value) {
         if (attributes == null) {
             attributes = new LinkedHashMap<>();
         }
         attributes.put(key, value);
     }
-    
+
+    /**
+     * Output a string representation of the HTML.
+     * @return String
+     */
     public String toHTML() {
         StringBuilder sb = new StringBuilder();
         StringBuilder attributesSb = new StringBuilder();

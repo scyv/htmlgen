@@ -3,7 +3,8 @@
         "coreAttributes": [
             "class",
             "id",
-            "title"
+            "title",
+            "style"
         ],
         "eventHandlerAttributes": [
             "onblur",
@@ -57,11 +58,15 @@
             },
             {
                 "name": "table",
-                "transparent": true,
                 "childIncludes": [
                     "thead",
                     "tbody",
                     "tr"
+                ],
+                "attributes": [
+                    "cellpadding",
+                    "cellspacing",
+                    "border"
                 ]
             },
             {
@@ -143,7 +148,8 @@
             },
             {
                 "name": "br",
-                "childIncludes": []
+                "childIncludes": [],
+                "notext": true
             }
         ]
     }

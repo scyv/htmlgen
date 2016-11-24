@@ -8,16 +8,16 @@ import java.util.TimeZone;
 /**
  * A writer for creating a class for a html element.
  */
-public class ClassWriter {
+class ClassWriter {
 
     /**
      * Create the class head.
-     * 
+     *
      * @param elementName the name of the html element
-     * @param fileName the filename
+     * @param fileName    the filename
      * @return a StringBuilder representing the head of the class
      */
-    public StringBuilder createClassHead(String elementName, String fileName) {
+    StringBuilder createClassHead(String elementName, String fileName) {
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
@@ -33,12 +33,12 @@ public class ClassWriter {
         classHead.append(" * This class represents a &lt;" + elementName + "&gt; html element.\n");
         classHead.append(" * This class is generated. Do not change manually!\n");
         classHead.append(" */\n");
-        classHead.append("@Generated(\"" + nowAsISO + "\")\n");
+        classHead.append("@Generated(value=\"HTMLGEN\", date=\"" + nowAsISO + "\")\n");
         classHead.append("/**\n");
         classHead.append(" * Represents a &lt;" + elementName + "&gt; html element.\n");
         classHead.append(" */\n");
         classHead.append("public class " + fileName + " extends AbstractElement {\n\n");
-        classHead.append(ElementUtil.tab() + "public " + fileName + "() { super(\"" + elementName + "\"); }\n");
+        classHead.append(ElementUtil.TAB + "public " + fileName + "() { super(\"" + elementName + "\"); }\n");
         return classHead;
     }
 

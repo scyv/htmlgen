@@ -9,7 +9,7 @@ import javax.annotation.Generated;
  * This class represents a &lt;body&gt; html element.
  * This class is generated. Do not change manually!
  */
-@Generated("2016-11-19T22:06Z")
+@Generated(value="HTMLGEN", date="2016-11-24T10:34Z")
 /**
  * Represents a &lt;body&gt; html element.
  */

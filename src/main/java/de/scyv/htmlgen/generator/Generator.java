@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 /**
  * Main entry point of this project for generating the HTML-API.
- *
+ * <p>
  * Use this class to generate the API.
  */
 public class Generator {
@@ -39,13 +39,13 @@ public class Generator {
 
     /**
      * Main entry point of this project for generating the HTML-API.
-     *
+     * <p>
      * Use this to generate the API.
      *
-     * @throws IOException when there is a problem reading the specification
-     * file.
+     * @throws IOException        when there is a problem reading the specification
+     *                            file.
      * @throws URISyntaxException when the uri to the specification file is
-     * errornous.
+     *                            errornous.
      */
     public Generator() throws IOException, URISyntaxException {
 
